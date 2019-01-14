@@ -81,7 +81,7 @@ class Order(models.Model):
     def __str__(self):
         return f"Order Item: {self.user}"
 
-    def price(self):
+    def total(self):
 
         order_total = 0
         for item in self.items.all():
