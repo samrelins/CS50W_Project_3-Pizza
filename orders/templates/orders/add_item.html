@@ -1,0 +1,31 @@
+{% extends "orders/base.html" %}
+
+{% block title %}
+    Choose an Item
+{% endblock %}
+
+{% block body %}
+    <div class="accordion" id="accordionExample">
+    {% for dish in dishes %}
+        <div class="card">
+            <div class="card-header" id="heading{{ dish.id }}">
+                <h5 class="mb-0">
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse{{ dish.id }}" aria-expanded="true" aria-controls="collapse{{ dish.id }}">
+                        {{ dish.name }}
+                    </button>
+                </h5>
+            </div>
+
+            <div id="collapse{{ dish.id }}" class="collapse" aria-labelledby="heading{{ dish.id }}" data-parent="#accordionExample">
+                <div class="card-body">
+                    <div class="list-group">
+                    {% for item in dish.items.all %}
+                        <a class="list-group-item list-group-item-action" href="{% url 'item_options' item.id %}">{{ item.name }}</a>
+                    {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+{% endblock %}

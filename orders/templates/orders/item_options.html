@@ -1,0 +1,50 @@
+{% extends "orders/base.html" %}
+
+{% block title %}
+    Select size and extras    
+{% endblock %}
+
+{% block body %}
+
+    <h1>{{ item.dish }} - {{ item.name }}</h1>
+
+    <form>
+    {% if item.small_price %}
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" name="exampleRadios" type="radio" id="inlineCheckbox1" value="option1">
+            <label class="form-check-label" for="inlineCheckbox1">Small</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" name="exampleRadios" type="radio" id="inlineCheckbox2" value="option2">
+            <label class="form-check-label" for="inlineCheckbox2">Large</label>
+        </div>
+    {% endif %}
+    
+    {% if item.extras_limit %}
+        {% for i in extras_allowed %}
+            <select class="form-check form-check-inline">
+                <option default>-- Select a topping --</option>
+                {% for extra in item.dish.extras.all %}
+                    <option>{{ extra.name }}</option>
+                {% endfor %}
+            </select>
+        {% endfor %}
+    
+    {% else %}
+        {% for extra in item.dish.extras.all %}
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="inlineCheckbox{{ extra.id }}" value="option1">
+                <label class="form-check-label" for="inlineCheckbox{{ extra.id }}">{{ extra.name }}</label>
+            </div>
+        {% endfor %}
+        {% for extra in item.extras.all %}
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="inlineCheckbox{{ extra.id }}" value="option1">
+                <label class="form-check-label" for="inlineCheckbox{{ extra.id }}">{{ extra.name }}</label>
+            </div>
+        {% endfor %}
+    {% endif %}
+    </form>
+
+    <a class="btn btn-primary" href="/new_order">Add item to order</a>
+{% endblock %}

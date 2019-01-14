@@ -1,0 +1,44 @@
+{% extends "orders/base.html" %}
+
+{% block title %}
+    Menu
+{% endblock %}
+
+{% block body %}
+    <a class="btn btn-primary" href="/orders">Place an order</a>
+{% for dish in dishes %}
+    <table class="table">
+        <thead>
+            <h1 colspan="3" scope="col" class="text-center">{{ dish }}</h1>
+            {% if not dish.one_size %}
+                <tr>
+                    <th scope="col"></th>
+                    <th scope="col">Small</th>
+                    <th scope="col">Large</th>
+                </tr>
+            {% endif %}
+        </thead>
+        <tbody>
+        {% for item in dish.items.all %}
+            <tr>
+                <th scope="col">{{ item.name }}</th>
+                <td scope="col">
+                {% if item.small_price %}
+                    {{ item.print_small_price }}
+                {% endif %}
+                </td>
+                <td scope="col">{{ item.print_large_price }}</td>
+            </tr>
+            {% if item.extras.all %}
+                <tr>
+                    <td colspan=3>{{ item.extras.all }}</td>
+                </tr>
+            {% endif %}
+        {% endfor %}
+        </tbody>
+    </table>
+    {% if dish.extras.all %}
+        {{ dish.extras.all }}
+    {% endif %}
+{% endfor %}
+{% endblock %}

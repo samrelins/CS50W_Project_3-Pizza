@@ -1,0 +1,36 @@
+{% extends "orders/base.html" %}
+{% load static %}
+ 
+{% block title %}
+    Log in to your account
+{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'orders/login_register.css' %}"/>
+{% endblock %}
+
+{% block body %}
+    <form class="form-signin" method="POST"> 
+        {% csrf_token %}
+        <div id="title">
+            <h1 class="display-2">Login</h1>
+            <h3>Get some food in yo face bitch</h3>
+        </div>
+
+        <div class="form-label-group" id="top_box">
+            <input type="text" id="inputUsername" class="form-control" placeholder="Username" required autofocus name="username">
+            <label for="inputUsername">Username</label>
+        </div>
+
+        <div class="form-label-group" id="bottom_box">
+            <input type="password" id="inputPassword" class="form-control" placeholder="Password" required name="password">
+            <label for="inputPassword">Password</label>
+        </div>
+        <button class="btn btn-lg btn-primary btn-block" type="submit" id="login">Log In</button>
+        <br>
+        <h5> If you don't already have an account you can register for one <a href="/register">here</a></h5>
+    </form>
+{% endblock %}
+
+<!-- Custom styles for this template courtesey of bootstrap-->
+
