@@ -56,9 +56,11 @@ def orders(request):
     if not request.user.is_authenticated:
         return redirect("login")
 
-    user_orders = Order.objects.filter(user=request.user)
+    pending_order = Order.objects.filter(user=request.user, paid="False").first()
+    historic_orders = Order.objects.filter(user=request.user, paid="True").all()
     context = {
-            "orders": user_orders
+            "historic_orders": historic_orders,
+            "pending_order": pending_order
     }
     return render(request, "orders/orders.html", context)
 
@@ -67,7 +69,7 @@ def order(request, order_id):
     try:
         order = Order.objects.get(pk=order_id)
     except Order.DoesNotExist:
-        raise Http404("Menu item doesn't exist")
+        raise Http404("Order doesn't exist")
 
     context = {
             "order": order,

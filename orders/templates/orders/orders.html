@@ -6,6 +6,49 @@
 
 {% block body %}
     <a class="btn btn-primary" href="/order/6">Place a New Order</a>
-    {}
-    <a class="btn btn-primary" href="/order/5">See one o' yo orders bitch!!</a>
+    <div class="row">
+        {% if pending_order %}
+            <div class="col-sm-4"></div>
+            <div class="col-sm-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Order #{{ pending_order.id }}</h3>
+                        <h5 class="text-muted">15 Nov 2018</h5>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">Items {{ pending_order.items_total }}</li>
+                        <li class="list-group-item">Total: {{ pending_order.print_total }}</li>
+                    </ul>
+                    <div class="card-body text-center">
+                        <a class="btn btn-primary" href="order/{{ pending_order.id }}">Complete Order</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4"></div>
+        {% endif %}
+    </div>
+    <div class="row">
+        {% for order in historic_orders %}
+            <div class="col-sm-6 col-md-4 col-lg-3">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Order #{{ order.id }}</h3>
+                        <h5 class="text-muted">15 Nov 2018</h5>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">Items {{ order.items_total }}</li>
+                        <li class="list-group-item">Total: {{ order.print_total }}</li>
+                        {% if order.complete %}
+                            <li class="list-group-item">Complete</li>
+                        {% else %}
+                            <li class="list-group-item">Delivery Pending</li>
+                        {% endif %}
+                    </ul>
+                    <div class="card-body text-center">
+                        <a class="btn btn-primary" href="order/{{ order.id }}">View Details</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
 {% endblock %}

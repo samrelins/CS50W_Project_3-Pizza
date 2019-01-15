@@ -99,3 +99,5 @@ class Order(models.Model):
         total = "$" + str("{:.2f}".format(self.total()/100))
         return total
 
+    def items_total(self):
+        return len(self.items.all())
