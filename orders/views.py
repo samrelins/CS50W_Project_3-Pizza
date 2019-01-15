@@ -13,7 +13,7 @@ def auth_login(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect("index")
+            return redirect("orders")
         else:
             return redirect("login", {"message": "Invalid login details"})
     if request.method == "GET":
@@ -37,6 +37,11 @@ def auth_register(request):
         return render(request, "orders/register.html", {"messgage": None})
 
 
+def auth_logout(request):
+    logout(request)
+    return redirect("index")
+
+
 def index(request):
     items = MenuItem.objects.all()
     dishes = MenuDish.objects.all()
@@ -46,12 +51,28 @@ def index(request):
     }
     return render(request, "orders/index.html", context)
 
+
 def orders(request):
-    return render(request, "orders/orders.html")
+    if not request.user.is_authenticated:
+        return redirect("login")
+
+    user_orders = Order.objects.filter(user=request.user)
+    context = {
+            "orders": user_orders
+    }
+    return render(request, "orders/orders.html", context)
 
 
-def new_order(request): #will need an order id input at some point
-    return render(request, "orders/new_order.html")
+def order(request, order_id):
+    try:
+        order = Order.objects.get(pk=order_id)
+    except Order.DoesNotExist:
+        raise Http404("Menu item doesn't exist")
+
+    context = {
+            "order": order,
+    }
+    return render(request, "orders/order.html", context)
 
 
 def add_item(request):
@@ -73,10 +94,15 @@ def item_options(request, item_id):
     if item.dish.one_size and len(item.list_extras()) == 0:
         return redirect("add_item")
 
+    if item.extras_limit:
+        extras_allowed = range(0,item.extras_allowed)
+    else:
+        extras_allowed = 0
+
     context = {
             "item": item,
             "extras": item.list_extras(),
-            "extras_allowed": range(0,item.extras_allowed)
+            "extras_allowed": extras_allowed
     }
     return render(request, "orders/item_options.html", context)
 

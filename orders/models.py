@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils.timezone import now
 
 # Create your models here.
 class MenuDish(models.Model):
@@ -72,10 +73,15 @@ class OrderItem(models.Model):
 
         return item_price
 
+    def print_price(self):
+        price = "$" + str("{:.2f}".format(self.price()/100))
+        return price
 
 class Order(models.Model):
     items = models.ManyToManyField(OrderItem, related_name="orders", blank=True)
     user = models.ForeignKey(User, related_name="orders", on_delete=models.CASCADE)
+    date = models.DateTimeField(default=now, editable=False)
+    paid = models.BooleanField(default=False)
     complete = models.BooleanField(default=False)
 
     def __str__(self):
@@ -88,3 +94,8 @@ class Order(models.Model):
             order_total += item.price()
 
         return order_total
+
+    def print_total(self):
+        total = "$" + str("{:.2f}".format(self.total()/100))
+        return total
+

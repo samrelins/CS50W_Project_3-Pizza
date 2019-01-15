@@ -1,0 +1,44 @@
+{% extends "orders/base.html" %}
+
+{% block title %}
+    Your Order
+{% endblock %}
+
+{% block body %}
+    {% if not order.paid %}
+        <a class="btn btn-primary" href="/add_item">Add an Item yall</a>
+    {% endif %}
+    <div class="row">
+    {% for item in order.items.all %}
+        <div class="col-sm col-md-6 col-lg-4">
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h4 class="card-title">{{ item.item.dish.name }}: {{ item.item.name }}</h4> 
+                    {% if item.small %}
+                        <p class="card-text text-muted">small</p>
+                    {% else %}
+                        <p class="card-text text-muted">large</p>
+                    {% endif %}
+                </div>
+                <h6 class="mx-3">Extras:</h6> 
+                <ul>
+                    {% for extra in item.extras.all %}
+                        <li>{{ extra.name }}</li>
+                    {% endfor %}
+                </ul>
+                <div class="card-body">
+                    <h5 class="card-title text-danger">{{ item.print_price }}</h5> 
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+    <h2 class="text-danger"><b>Total</b>{{ order.print_total }}</h2>
+    {% if not order.paid %}
+        <a class="btn btn-primary" href="/complete_order">Pay for dat shit</a>
+    {% endif %}
+    {% if order.paid %}
+        <a class="btn btn-primary" href="/orders">back to yo orders bitch!!</a>
+    {% endif %}
+{% endblock %}
+
