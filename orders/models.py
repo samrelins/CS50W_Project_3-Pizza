@@ -101,3 +101,12 @@ class Order(models.Model):
 
     def items_total(self):
         return len(self.items.all())
+
+    def print_date(self):
+        months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Nov", "Dec"]
+        date = str(self.date.day)
+        date += " " + months[self.date.month + 1]
+        date += " " + str(self.date.year)
+        return date
+
+

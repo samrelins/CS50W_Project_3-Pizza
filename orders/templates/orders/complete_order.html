@@ -5,7 +5,60 @@
 {% endblock %}
 
 {% block body %}
-    <h2>shows the items in your order and 'takes payment'</h2>
-    <h2 class="text-danger">All the items and shit you've chosen go here bitch!!</h2>
-    <a class="btn btn-primary" href="/review_order">complete dat shit</a>
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th>Order #18</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Items Selected: 8</td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="accordion m-5" id="accordionExample">
+    {% for item in order.items.all %}
+        <div class="card">
+            <div class="card-header p-0" id="heading{{ item.id }}">
+                <h5 class="mb-0">
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse{{ item.id }}" aria-expanded="false" aria-controls="collapse{{ item.id }}">
+                        {{ item.item.dish.name }}: {{ item.item.name }}
+                    </button>
+                </h5>
+            </div>
+
+            <div id="collapse{{ item.id }}" class="collapse" aria-labelledby="heading{{ item.id }}" data-parent="#accordionExample">
+                <div class="card-body py-0">
+                    <div class="list-group">
+                    {% if not item.dish.one_size %}
+                        {% if item.small %}
+                        <p>Size: small</p>
+                        {% else %}
+                        <p>Size: large</p>
+                        {% endif %}
+                    {% endif %}
+                    {% for extra in item.extras.all %}
+                    <p>Extra: {{ extra.name }}</p>
+                    {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+    <table class="table">
+        <tbody>
+            <tr>
+                <td>Expected Delivery Time: 25 Jun 2058</td>
+            </tr>
+            <tr>
+                <td class="text-danger">Order Total: {{  order.print_total }}</td>
+            </tr>
+        </tbody>
+    </table>
+    <form target="/complete_order" method="POST">
+        {% csrf_token %}
+        <button class="btn btn-primary" type="submit" target="complete_order" method="POST">Complete Order</button>
+    </form>
 {% endblock %}
