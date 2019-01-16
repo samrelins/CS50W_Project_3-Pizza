@@ -5,32 +5,35 @@
 {% endblock %}
 
 {% block body %}
-    <a class="btn btn-primary" href="/new_order">Place a New Order</a>
     <div class="row">
+
         {% if pending_order %}
-            <div class="col-sm-4"></div>
-            <div class="col-sm-4">
-                <div class="card my-2">
-                    <div class="card-header">
-                        <h3>Order #{{ pending_order.id }}</h3>
-                        <h5 class="text-muted">{{ pending_order.print_date }}</h5>
-                    </div>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">Items {{ pending_order.items_total }}</li>
-                        <li class="list-group-item">Total: {{ pending_order.print_total }}</li>
-                    </ul>
-                    <div class="card-body text-center">
-                        <a class="btn btn-primary" href="order/{{ pending_order.id }}">Complete Order</a>
-                    </div>
+        <div class="col-sm-4"></div>
+        <div class="col-sm-4">
+            <div class="card my-2">
+                <div class="card-header">
+                    <h3>Order #{{ pending_order.id }}</h3>
+                    <h5 class="text-muted">{{ pending_order.print_date }}</h5>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Items {{ pending_order.items_total }}</li>
+                    <li class="list-group-item">Total: {{ pending_order.print_total }}</li>
+                </ul>
+                <div class="card-body text-center">
+                    <a class="btn btn-primary" href="order/{{ pending_order.id }}">Complete Order</a>
                 </div>
             </div>
-            <div class="col-sm-4"></div>
+        </div>
+        <div class="col-sm-4"></div>
+        {% else %}
+            <a class="btn btn-primary display-block mx-auto mt-3" href="/new_order">Place a New Order</a>
         {% endif %}
+
     </div>
-    <div class="row">
+    <div class="row p-4">
         {% for order in historic_orders %}
-            <div class="col-sm-6 col-md-4 col-lg-3">
-                <div class="card my-2">
+            <div class="col-sm-6 col-md-4 col-lg-3 p-0">
+                <div class="card m-3">
                     <div class="card-header">
                         <h3>Order #{{ order.id }}</h3>
                         <h5 class="text-muted">{{ order.print_date }}</h5>

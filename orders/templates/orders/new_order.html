@@ -1,0 +1,81 @@
+{% extends "orders/base_navbar.html" %}
+
+{% block title %}
+    Your Order
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <a class="btn btn-primary display-block mx-auto mt-4" href="/choose_item">Add an Item yall</a>
+    </div>
+
+    <div class="row px-5 mt-4">
+
+    {% for item in order.items.all %}
+        <div class="col-sm-6 col-md-4 col-lg-3 p-0">
+            <div class="card m-3">
+                <div class="card-header pt-4">
+                    <h5 class="font-weight-bold">{{ item.item.dish.name }}:</h5>
+                    <h5 class="font-weight-bold">{{ item.item.name }}</h5>
+                </div>
+                <ul class="list-group list-group-flush">
+                    
+                    {% if item.small %}
+                        <li class="list-group-item">Small</li>
+                    {% endif %}
+
+                    {% if not item.small and not item.item.dish.one_size %}
+                        <li class="list-group-item">Large</li>
+                    {% endif %}
+
+                    {% if item.extras.first %}
+                        <li class="list-group-item">
+                            Extras: <ul>
+                            {% for extra in item.extras.all %}
+                                <li>{{ extra.name }}</li>
+                            {% endfor %}
+                            </ul>
+                        </li>
+                    {% endif %}
+
+                    <li class="list-group-item text-danger">Price: {{ item.print_price }}</li>
+                </ul>
+            </div>
+        </div>
+    {% endfor %}
+
+    </div>
+
+    <div class="row mt-5">
+        <div class="col-sm-1 col-md-2 col-lg-3"></div>
+        <div class="col-sm-10 col-md-8 col-lg-6">
+            <div class="container-fluid">
+                <table class="table border">
+                    <thead class="table-active">
+                        <tr>
+                            <th class="text-center">Order #{{ order.id }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="text-center">{{ order.print_date }} - {{ order.print_time }}</td>
+                        </tr>
+                        <tr>
+                            <td class="text-center">{{ order.items_total }} Items</td>
+                        </tr>
+                        <tr>
+                            <td class="text-center text-danger"> Total: {{ order.print_total }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <a class="btn btn-primary display-block mx-auto" href="/complete_order">Pay for dat shit</a>
+    </div>
+
+
+
+{% endblock %}
+

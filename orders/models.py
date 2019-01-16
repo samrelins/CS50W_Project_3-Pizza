@@ -113,4 +113,13 @@ class Order(models.Model):
         date += " " + str(self.date.year)
         return date
 
+    def print_time(self):
+        time = str(self.date.hour)
+        if self.date.minute < 10:
+            time += ":0" + str(self.date.minute)
+        else:
+            time += ":" + str(self.date.minute)
+        return time
+
+
 

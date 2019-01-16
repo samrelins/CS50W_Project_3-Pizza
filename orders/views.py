@@ -94,7 +94,13 @@ def order(request, order_id):
     context = {
             "order": order,
     }
-    return render(request, "orders/order.html", context)
+
+    if order.paid:
+        return render(request, "orders/historic_order.html", context)
+    else:
+        return render(request, "orders/new_order.html", context)
+
+
 
 
 def choose_item(request):
