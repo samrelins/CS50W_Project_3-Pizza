@@ -11,6 +11,10 @@ class MenuDish(models.Model):
     def __str__(self):
         return f"{self.name}"
 
+    def print_extra_price(self):
+        price = "$" + str("{:.2f}".format(self.extra_price/100))
+        return price
+
 class MenuItem(models.Model):
     name = models.CharField(max_length=64)
     dish = models.ForeignKey(MenuDish, on_delete=models.CASCADE, related_name="items")
