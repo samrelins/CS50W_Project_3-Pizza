@@ -5,60 +5,35 @@
 {% endblock %}
 
 {% block body %}
-    <table class="table">
-        <thead class="thead-dark">
-            <tr>
-                <th>Order #18</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>Items Selected: 8</td>
-            </tr>
-        </tbody>
-    </table>
-    <div class="accordion m-5" id="accordionExample">
-    {% for item in order.items.all %}
-        <div class="card">
-            <div class="card-header p-0" id="heading{{ item.id }}">
-                <h5 class="mb-0">
-                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse{{ item.id }}" aria-expanded="false" aria-controls="collapse{{ item.id }}">
-                        {{ item.item.dish.name }}: {{ item.item.name }}
-                    </button>
-                </h5>
-            </div>
-
-            <div id="collapse{{ item.id }}" class="collapse" aria-labelledby="heading{{ item.id }}" data-parent="#accordionExample">
-                <div class="card-body py-0">
-                    <div class="list-group">
-                    {% if not item.dish.one_size %}
-                        {% if item.small %}
-                        <p>Size: small</p>
-                        {% else %}
-                        <p>Size: large</p>
-                        {% endif %}
-                    {% endif %}
-                    {% for extra in item.extras.all %}
-                    <p>Extra: {{ extra.name }}</p>
-                    {% endfor %}
-                    </div>
-                </div>
+    <div class="row mt-5">
+        <div class="col-sm-1 col-md-2 col-lg-3"></div>
+        <div class="col-sm-10 col-md-8 col-lg-6">
+            <div class="container-fluid">
+                <table class="table border">
+                    <thead class="table-active">
+                        <tr>
+                            <th class="text-center">Order #{{ order.id }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="text-center">{{ order.print_date }} - {{ order.print_time }}</td>
+                        </tr>
+                        <tr>
+                            <td class="text-center">{{ order.items_total }} Items</td>
+                        </tr>
+                        <tr>
+                            <td class="text-center text-danger"> Total: {{ order.print_total }}</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
-    {% endfor %}
     </div>
-    <table class="table">
-        <tbody>
-            <tr>
-                <td>Expected Delivery Time: 25 Jun 2058</td>
-            </tr>
-            <tr>
-                <td class="text-danger">Order Total: {{  order.print_total }}</td>
-            </tr>
-        </tbody>
-    </table>
     <form target="/complete_order" method="POST">
-        {% csrf_token %}
-        <button class="btn btn-primary" type="submit" target="complete_order" method="POST">Complete Order</button>
+        <div class="row">
+                {% csrf_token %}
+                <button class="btn btn-primary display-block mx-auto" type="submit" target="complete_order" method="POST">Complete Order</button>
+        </div>
     </form>
 {% endblock %}
