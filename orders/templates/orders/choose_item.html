@@ -5,27 +5,65 @@
 {% endblock %}
 
 {% block body %}
-    <div class="accordion" id="accordionExample">
-    {% for dish in dishes %}
-        <div class="card">
-            <div class="card-header" id="heading{{ dish.id }}">
-                <h5 class="mb-0">
-                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse{{ dish.id }}" aria-expanded="true" aria-controls="collapse{{ dish.id }}">
-                        {{ dish.name }}
-                    </button>
-                </h5>
-            </div>
+<div class="row my-4">
+        <div class="col">
+            <h1 class="display-block text-center px-auto py-3">Select Menu Item:</h1>
+        </div>
+    </div>
+{% for dish in dishes %}
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+            <div class="container-fluid">
+                <table class="table m-0 p-0">
+                    <thead>
+                        <tr class="d-flex">
+                            <th class="col-9" scope="col">
+                                <a class="list-unstyled" data-toggle="collapse" href="#collapseExtras{{ dish.id }}" aria-expanded="false" aria-controls="collapseExtras{{ dish.id }}">
+                                    {{ dish.name }}
+                                </a>
+                            <th class="col-3" scope="col">
+                                <button class="btn btn-primary ml-2" type="button" data-toggle="collapse" data-target="#collapseExtras{{ dish.id }}" aria-expanded="false" aria-controls="collapseExtras{{ dish.id }}">
+                                    Show Options
+                                </button>
+                            </th>
+                        </tr>
+                    </thead>
+                </table>
+                <div class="collapse" id="collapseExtras{{ dish.id }}">
+                    <table class="table">
+                        <tbody>
 
-            <div id="collapse{{ dish.id }}" class="collapse" aria-labelledby="heading{{ dish.id }}" data-parent="#accordionExample">
-                <div class="card-body">
-                    <div class="list-group">
-                    {% for item in dish.items.all %}
-                        <a class="list-group-item list-group-item-action" href="{% url 'item_options' item.id %}">{{ item.name }}</a>
-                    {% endfor %}
-                    </div>
+                            {% for item in dish.items.all %}
+                            <tr class="d-flex"> 
+                                <td class="col-1" scope="col">
+                                </td>
+                                <th class="col-3" scope="col">
+                                    {{ item.name }}
+                                </th>
+
+                                {% if item.small_price %}
+                                    <td class="col-3 text-danger">
+                                        {{ item.print_small_price }} +
+                                    </td>
+                                {% else %}
+                                    <td class="col-3 text-danger">{{ item.print_large_price }}</td>
+                                {% endif %}
+
+                                <td class="col-5" scope="col">
+                                    <a class="btn btn-primary" href="/item_options/{{ item.id }}">
+                                        Add to Order
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+
+                        </tbody>
+                    </table>
                 </div>
+                </table>
             </div>
         </div>
-    {% endfor %}
     </div>
+{% endfor %}
 {% endblock %}
