@@ -1,11 +1,10 @@
-{% extends "orders/base.html" %}
+{% extends "orders/base_navbar.html" %}
 
 {% block title %}
     Menu
 {% endblock %}
 
 {% block body %}
-    <a class="btn btn-primary" href="/orders">Place an order</a>
 {% for dish in dishes %}
     <table class="table">
         <thead>

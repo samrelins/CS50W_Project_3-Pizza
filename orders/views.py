@@ -13,7 +13,7 @@ def auth_login(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect("orders")
+            return redirect("/")
         else:
             return redirect("login", {"message": "Invalid login details"})
     if request.method == "GET":
@@ -56,8 +56,10 @@ def new_order(request):
     if not request.user.is_authenticated:
         return redirect("login")
 
-    if len(Order.objects.filter(user=request.user, paid="False")):
-        return redirect("orders")
+    unpaid_order = Order.objects.filter(user=request.user, paid="False").first()
+
+    if unpaid_order:
+        return redirect(f"order/{unpaid_order.id}")
 
     order = Order(user=request.user)
     order.save()
