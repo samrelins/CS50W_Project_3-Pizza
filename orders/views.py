@@ -181,6 +181,9 @@ def complete_order(request):
         return redirect("orders")
 
     else:
+        if current_order.items_total() == 0:
+            return redirect(f"order/{current_order.id}")
+
         context = {
                 "order": current_order,
         }

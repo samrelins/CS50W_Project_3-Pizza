@@ -5,9 +5,14 @@
 {% endblock %}
 
 {% block body %}
-    <div class="row">
 
-        {% if pending_order %}
+    {% if pending_order %}
+    <div class="row px-4">
+        <div class="col">
+            <h1 class="border-bottom display-block text-center px-auto py-3">Incomplete Orders:</h1>
+        </div>
+    </div>
+    <div class="row mt-2">
         <div class="col-sm-4"></div>
         <div class="col-sm-4">
             <div class="card my-2">
@@ -25,12 +30,20 @@
             </div>
         </div>
         <div class="col-sm-4"></div>
-        {% else %}
-            <a class="btn btn-primary display-block mx-auto mt-3" href="/new_order">Place a New Order</a>
-        {% endif %}
+    </div>
+    {% else %}
+    <div class="row px-4">
+        <a class="btn btn-primary display-block mx-auto mt-4" href="/new_order">Place a New Order</a>
+    </div>
+    {% endif %}
 
+    <div class="row px-4">
+        <div class="col">
+            <h1 class="border-bottom display-block text-center px-auto py-3">Historic Orders:</h1>
+        </div>
     </div>
     <div class="row p-4">
+
         {% for order in historic_orders %}
             <div class="col-sm-6 col-md-4 col-lg-3 p-0">
                 <div class="card m-3">
@@ -41,11 +54,13 @@
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item">Items {{ order.items_total }}</li>
                         <li class="list-group-item">Total: {{ order.print_total }}</li>
+                        
                         {% if order.complete %}
                             <li class="list-group-item">Complete</li>
                         {% else %}
                             <li class="list-group-item">Delivery Pending</li>
                         {% endif %}
+                        
                     </ul>
                     <div class="card-body text-center">
                         <a class="btn btn-primary" href="order/{{ order.id }}">View Details</a>
@@ -53,5 +68,6 @@
                 </div>
             </div>
         {% endfor %}
+
     </div>
 {% endblock %}
