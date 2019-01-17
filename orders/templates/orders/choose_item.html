@@ -1,4 +1,4 @@
-{% extends "orders/base_navbar.html" %}
+{% extends "menu/base_navbar.html" %}
 
 {% block title %}
     Choose an Item
@@ -51,7 +51,7 @@
                                 {% endif %}
 
                                 <td class="col-5" scope="col">
-                                    <a class="btn btn-primary" href="/item_options/{{ item.id }}">
+                                    <a class="btn btn-primary" href="{% url "item_options" item_id=item.id %}">
                                         Add to Order
                                     </a>
                                 </td>

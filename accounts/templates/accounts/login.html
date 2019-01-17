@@ -1,4 +1,4 @@
-{% extends "orders/base.html" %}
+{% extends "menu/base.html" %}
 {% load static %}
  
 {% block title %}
@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block css %}
-    <link rel="stylesheet" href="{% static 'orders/login_register.css' %}"/>
+    <link rel="stylesheet" href="{% static 'accounts/login_register.css' %}"/>
 {% endblock %}
 
 {% block body %}
@@ -28,7 +28,7 @@
         </div>
         <button class="btn btn-lg btn-primary btn-block" type="submit" id="login">Log In</button>
         <br>
-        <h5> If you don't already have an account you can register for one <a href="/register">here</a></h5>
+        <h5> If you don't already have an account you can register for one <a href="{% url "register" %}">here</a></h5>
     </form>
 {% endblock %}
 

@@ -1,75 +1,12 @@
-from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from .models import *
 
 # Create your views here.
 
-def auth_login(request):
-    if request.method == "POST":
-        username = request.POST["username"]
-        password = request.POST["password"]
-        user = authenticate(request, username=username, password=password)
-        if user is not None:
-            login(request, user)
-            return redirect("/")
-        else:
-            return redirect("login", {"message": "Invalid login details"})
-    if request.method == "GET":
-        return render(request, "orders/login.html", {"messgage": None})
-
-
-def auth_register(request):
-
-    if request.method == "POST":
-        username = request.POST["username"]
-        email = request.POST["email"]
-        password = request.POST["password"]
-
-        user = User.objects.create_user(username, email, password)
-
-        login(request, user)
-
-        return redirect("index")
-
-    if request.method == "GET":
-        return render(request, "orders/register.html", {"messgage": None})
-
-
-def auth_logout(request):
-    logout(request)
-    return redirect("index")
-
-
-def index(request):
-    items = MenuItem.objects.all()
-    dishes = MenuDish.objects.all()
-    context = {
-            "items": items,
-            "dishes": dishes
-    }
-    return render(request, "orders/index.html", context)
-
-
-def new_order(request):
-    if not request.user.is_authenticated:
-        return redirect("login")
-
-    unpaid_order = Order.objects.filter(user=request.user, paid="False").first()
-
-    if unpaid_order:
-        return redirect(f"order/{unpaid_order.id}")
-
-    order = Order(user=request.user)
-    order.save()
-
-    return redirect(f"order/{order.id}")
-
-
+@login_required
 def orders(request):
-    if not request.user.is_authenticated:
-        return redirect("login")
 
     orders = Order.objects.filter(user=request.user).all()
 
@@ -82,14 +19,30 @@ def orders(request):
     return render(request, "orders/orders.html", context)
 
 
+@login_required
+def new_order(request):
+
+    unpaid_order = Order.objects.filter(user=request.user, paid="False").first()
+
+    if unpaid_order:
+        return redirect("order", order_id=unpaid_order.id)
+
+    order = Order(user=request.user)
+    order.save()
+
+    return redirect("order", order_id=order.id)
+
+
+@login_required
 def order(request, order_id):
-    if not request.user.is_authenticated:
-        return redirect("login")
 
     try:
         order = Order.objects.get(pk=order_id)
     except Order.DoesNotExist:
         raise Http404("Order doesn't exist")
+
+    if not order.user == request.user:
+        return redirect("orders")
 
     context = {
             "order": order,
@@ -101,11 +54,8 @@ def order(request, order_id):
         return render(request, "orders/new_order.html", context)
 
 
-
-
+@login_required
 def choose_item(request):
-    if not request.user.is_authenticated:
-        return redirect("login")
 
     items = MenuItem.objects.all()
     dishes = MenuDish.objects.all()
@@ -116,9 +66,8 @@ def choose_item(request):
     return render(request, "orders/choose_item.html", context)
 
 
+@login_required
 def item_options(request, item_id):
-    if not request.user.is_authenticated:
-        return redirect("login")
 
     try:
         item = MenuItem.objects.get(pk=item_id)
@@ -138,9 +87,8 @@ def item_options(request, item_id):
     return render(request, "orders/item_options.html", context)
 
 
+@login_required
 def add_item(request):
-    if not request.user.is_authenticated:
-        return redirect("login")
 
     if request.method == "POST":
         print(request.POST)
@@ -166,12 +114,29 @@ def add_item(request):
         current_order = Order.objects.get(user=request.user, paid="False")
         current_order.items.add(order_item)
         current_order.save()
-        return redirect(f"order/{current_order.id}")
+        return redirect("order", order_id=current_order.id)
 
 
+@login_required
+def edit_item(request, item_id):
+
+    order_item = OrderItem.objects.get(pk=item_id)
+    menu_item = order_item.item
+    order_item.delete()
+    return redirect("item_options", item_id=menu_item.id)
+
+
+@login_required
+def remove_item(request, item_id):
+
+    order_item = OrderItem.objects.get(pk=item_id)
+    order_item.delete()
+    current_order = Order.objects.get(user=request.user, paid="False")
+    return redirect("order", order_id=current_order.id)
+
+
+@login_required
 def complete_order(request):
-    if not request.user.is_authenticated:
-        return redirect("login")
 
     current_order = Order.objects.get(user=request.user, paid="False")
 
@@ -182,14 +147,10 @@ def complete_order(request):
 
     else:
         if current_order.items_total() == 0:
-            return redirect(f"order/{current_order.id}")
+            return redirect("order", order_id=current_order.id)
 
         context = {
                 "order": current_order,
         }
         return render(request, "orders/complete_order.html", context)
-
-
-def review_order(request):
-    return render(request, "orders/review_order.html")
 

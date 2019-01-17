@@ -1,4 +1,4 @@
-{% extends "orders/base_navbar.html" %}
+{% extends "menu/base_navbar.html" %}
 
 {% block title %}
     Complete Order
@@ -30,7 +30,7 @@
             </div>
         </div>
     </div>
-    <form target="/complete_order" method="POST">
+    <form target="{% url "complete_order" %}" method="POST">
         <div class="row">
                 {% csrf_token %}
                 <button class="btn btn-primary display-block mx-auto" type="submit" target="complete_order" method="POST">Complete Order</button>

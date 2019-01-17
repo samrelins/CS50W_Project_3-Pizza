@@ -1,4 +1,4 @@
-{% extends "orders/base_navbar.html" %}
+{% extends "menu/base_navbar.html" %}
 
 {% block title %}
     Your Orders
@@ -25,7 +25,7 @@
                     <li class="list-group-item">Total: <span class="text-danger">{{ pending_order.print_total }}</span></li>
                 </ul>
                 <div class="card-body text-center">
-                    <a class="btn btn-primary" href="order/{{ pending_order.id }}">Complete Order</a>
+                    <a class="btn btn-primary" href="{% url "order" order_id=pending_order.id %}">Complete Order</a>
                 </div>
             </div>
         </div>
@@ -33,7 +33,7 @@
     </div>
     {% else %}
     <div class="row px-4">
-        <a class="btn btn-primary display-block mx-auto mt-4" href="/new_order">Place a New Order</a>
+        <a class="btn btn-primary display-block mx-auto mt-4" href="{% url "new_order" %}">Place a New Order</a>
     </div>
     {% endif %}
 
@@ -63,7 +63,7 @@
                         
                     </ul>
                     <div class="card-body text-center">
-                        <a class="btn btn-primary" href="order/{{ order.id }}">View Details</a>
+                        <a class="btn btn-primary" href="{% url "order" order_id=order.id %}">View Details</a>
                     </div>
                 </div>
             </div>

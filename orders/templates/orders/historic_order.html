@@ -1,4 +1,4 @@
-{% extends "orders/base_navbar.html" %}
+{% extends "menu/base_navbar.html" %}
 
 {% block title %}
     Your Order
@@ -45,7 +45,7 @@
     </div>
 
     <div class="row mt-2">
-        <a class="btn btn-primary display-block mx-auto" href="/orders">back to yo orders bitch!!</a>
+        <a class="btn btn-primary display-block mx-auto" href="{% url "orders" %}">back to yo orders bitch!!</a>
     </div>
 
     <div class="row p-5">

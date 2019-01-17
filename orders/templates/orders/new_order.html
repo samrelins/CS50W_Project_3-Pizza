@@ -1,4 +1,4 @@
-{% extends "orders/base_navbar.html" %}
+{% extends "menu/base_navbar.html" %}
 
 {% block title %}
     Your Order
@@ -7,9 +7,9 @@
 {% block body %}
     <div class="row">
     {% if order.items_total %}
-        <a class="btn btn-primary display-block mx-auto mt-4" href="/choose_item">Add another item yall</a>
+    <a class="btn btn-primary display-block mx-auto mt-4" href="{% url "choose_item" %}">Add another item yall</a>
     {% else %}
-        <a class="btn btn-primary display-block mx-auto mt-4" href="/choose_item">Start yo order innit</a>
+    <a class="btn btn-primary display-block mx-auto mt-4" href="{% url "choose_item" %}">Start yo order innit</a>
     {% endif %}
     </div>
 
@@ -50,6 +50,10 @@
                     {% endif %}
 
                     <li class="list-group-item">Price: <span class="text-danger">{{ item.print_price }}</span></li>
+                    <li class="list-group-item text-center text-white">
+                        <a class="btn btn-danger mr-2" href="{% url "edit_item" item_id=item.id %}">Edit</a>
+                        <a class="btn btn-danger" href="{% url "remove_item" item_id=item.id %}">Remove</a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -85,7 +89,7 @@
 
     {% if order.items_total %}
     <div class="row">
-        <a class="btn btn-primary display-block mx-auto" href="/complete_order">Pay for dat shit</a>
+        <a class="btn btn-primary display-block mx-auto" href="{% url "complete_order" %}">Pay for dat shit</a>
     </div>
     {% endif %}
 
