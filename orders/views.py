@@ -91,7 +91,6 @@ def item_options(request, item_id):
 def add_item(request):
 
     if request.method == "POST":
-        print(request.POST)
         item_id = request.POST.get('item_id')
         extra_ids = request.POST.getlist('extras')
         size = request.POST.get("size")
@@ -99,7 +98,12 @@ def add_item(request):
         menu_item = MenuItem.objects.get(pk=item_id)
         order_item = OrderItem(item=menu_item)
 
-        print(size)
+        for id in extra_ids:
+            try:
+                id = int(id)
+            except:
+                return redirect("item_options", item_id=menu_item.id)
+
         if size == "small":
             order_item.small = True
 
