@@ -6,53 +6,109 @@
 
 {% block body %}
 
-    <h1>{{ item.dish }} - {{ item.name }}</h1>
+    <h1></h1>
 
     <form action="/add_item" method="POST">
     {% csrf_token %}
+        <div class="row mt-5">
+            <div class="col-sm-1 col-md-2 col-lg-3"></div>
+            <div class="col-sm-10 col-md-8 col-lg-6">
+                <div class="container-fluid">
+                    <table class="table border">
+                        <thead class="table-active">
+                            <tr>
+                                <th class="text-center">{{ item.dish }} - {{ item.name }}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
 
-    {% if item.small_price %}
-        <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" id="inlineCheckbox1" value="small" name="size">
-            <label class="form-check-label" for="inlineCheckbox1">Small</label>
+                            {% if not item.small_price and not item.list_extras %}
+                            <tr>
+                                <td class="text-center">
+                                    Price: <span class="text-danger">{{ item.print_large_price }}</span>
+                                </td>
+                            </tr>
+                            {% endif %}
+
+                            {% if item.small_price %}
+                            <tr>
+                                <td class="text-center">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" id="inlineCheckbox1" value="small" name="size">
+                                        <label class="form-check-label" for="inlineCheckbox1">
+                                            Small - <span class="text-danger">{{ item.print_small_price }}</span>
+                                        </label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" id="inlineCheckbox2" value="large" name="size">
+                                        <label class="form-check-label" for="inlineCheckbox2">
+                                            Large - <span class="text-danger">{{ item.print_large_price }}</span>
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endif %}
+
+                            {% if item.extras_limit %}
+
+                            {% for i in extras_allowed %}
+                            <tr>
+                                <td class="text-center">
+                                    <select class="form-check form-check-inline" name="extras">
+                                        <option selected>-- Select a Topping --</option>
+
+                                        {% for extra in item.dish.extras.all %}
+                                        <option value={{ extra.id }}>{{ extra.name }}</option>
+                                        {% endfor %}
+
+                                    </select>
+                                </td>
+                            </tr>
+                            {% endfor %}
+
+                            {% else %}
+                            {% for extra in item.dish.extras.all %}
+                            <tr class="d-flex">
+                                <td class="col-8 text-right">
+                                    <div class="form-check form-check-inline">
+                                        <label class="form-check-label" for="inlineCheckbox{{ extra.id }}">
+                                            Extra: {{ extra.name }}
+                                        </label>
+                                        <input class="form-check-input ml-3" type="checkbox" id="inlineCheckbox{{ extra.id }}" value="{{ extra.id }}" name="extras">
+                                    </div>
+                                </td>
+                                <td class="col-4 text-danger">
+                                    + {{ item.dish.print_extra_price }}
+                                </td>
+                            </tr>
+                            {% endfor %}
+
+                            {% for extra in item.extras.all %}
+                            <tr class="d-flex">
+                                <td class="col-8 text-right">
+                                    <div class="form-check form-check-inline">
+                                        <label class="form-check-label" for="inlineCheckbox{{ extra.id }}">
+                                            Extra: {{ extra.name }}
+                                        </label>
+                                        <input class="form-check-input ml-3" type="checkbox" id="inlineCheckbox{{ extra.id }}" value="{{ extra.id }}" name="extras">
+                                    </div>
+                                </td>
+                                <td class="col-4 text-danger">
+                                    + {{ item.dish.print_extra_price }}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
-        <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" id="inlineCheckbox2" value="large" name="size">
-            <label class="form-check-label" for="inlineCheckbox2">Large</label>
-        </div>
-    {% endif %}
+
     
-    {% if item.extras_limit %}
-        {% for i in extras_allowed %}
-
-        <select class="form-check form-check-inline" name="extras">
-            <option selected>-- Select a topping --</option>
-
-        {% for extra in item.dish.extras.all %}
-
-            <option value={{ extra.id }}>{{ extra.name }}</option>
-        {% endfor %}
-        </select>
-    {% endfor %}
-    
-    {% else %}
-        {% for extra in item.dish.extras.all %}
-
-        <div class="form-check form-check-inline">
-            <input class="form-check-input" type="checkbox" id="inlineCheckbox{{ extra.id }}" value="{{ extra.id }}" name="extras">
-            <label class="form-check-label" for="inlineCheckbox{{ extra.id }}">{{ extra.name }}</label>
+        <div class="row">
+            <button type="submit" class="btn btn-primary display-flex mx-auto" name="item_id" value="{{ item.id }}">Add item to order</button>
+        </form>
         </div>
-
-    {% endfor %}
-    {% for extra in item.extras.all %}
-
-        <div class="form-check form-check-inline">
-            <input class="form-check-input" type="checkbox" id="inlineCheckbox{{ extra.id }}" value="{{ extra.id }}" name="extras">
-            <label class="form-check-label" for="inlineCheckbox{{ extra.id }}">{{ extra.name }}</label>
-        </div>
-    {% endfor %}
-    {% endif %}
-    <button type="submit" class="btn btn-primary" name="item_id" value="{{ item.id }}">Add item to order</button>
-    </form>
 
 {% endblock %}

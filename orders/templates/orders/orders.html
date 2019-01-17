@@ -22,7 +22,7 @@
                 </div>
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item">Items {{ pending_order.items_total }}</li>
-                    <li class="list-group-item">Total: {{ pending_order.print_total }}</li>
+                    <li class="list-group-item">Total: <span class="text-danger">{{ pending_order.print_total }}</span></li>
                 </ul>
                 <div class="card-body text-center">
                     <a class="btn btn-primary" href="order/{{ pending_order.id }}">Complete Order</a>
@@ -53,7 +53,7 @@
                     </div>
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item">Items {{ order.items_total }}</li>
-                        <li class="list-group-item">Total: {{ order.print_total }}</li>
+                        <li class="list-group-item">Total: <span class="text-danger">{{ order.print_total }}</span></li>
                         
                         {% if order.complete %}
                             <li class="list-group-item">Complete</li>

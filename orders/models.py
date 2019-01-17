@@ -46,7 +46,11 @@ class MenuItem(models.Model):
             extras.append(extra.name)
         for extra in self.dish.extras.all():
             extras.append(extra.name)
-        return extras
+
+        if len(extras) == 0:
+            return 0
+        else:
+            return extras
 
 
 class MenuExtra(models.Model):

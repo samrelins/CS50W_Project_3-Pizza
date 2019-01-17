@@ -49,7 +49,7 @@
                         </li>
                     {% endif %}
 
-                    <li class="list-group-item text-danger">Price: {{ item.print_price }}</li>
+                    <li class="list-group-item">Price: <span class="text-danger">{{ item.print_price }}</span></li>
                 </ul>
             </div>
         </div>
@@ -75,7 +75,7 @@
                             <td class="text-center">{{ order.items_total }} Items</td>
                         </tr>
                         <tr>
-                            <td class="text-center text-danger"> Total: {{ order.print_total }}</td>
+                            <td class="text-center"> Total: <span class="text-danger">{{ order.print_total }}</span></td>
                         </tr>
                     </tbody>
                 </table>
