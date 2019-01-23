@@ -1,6 +1,6 @@
 from .models import *
 
-dishes = ["Regular Pizza", "Sicilian Pizza", "Pasta", "Salads", "Dinner Platters"]
+dishes = ["Regular Pizza", "Sicilian Pizza", "subs", "Pasta", "Salads", "Dinner Platters"]
 Salad_items = ["Garden Salad", 625, "Greek Salad", 825, "Antipasto", 825, "Salad w/Tuna", 825]
 dinner_items = ["Garden Salad", 3500, 6000, "Greek Salad", 4500, 7000, "Antipasto", 4500, 7000, "Baked Ziti", 3500, 6000, "Meatball Parm", 4500, 7000, "Chicken Parm", 4500, 8000]
 pasta_items = ["Baked Ziti w/Mozzarella", 650, "Baked Ziti w/Meatballs", 875, "Baked Ziti w/Chicken", 975]
@@ -12,77 +12,81 @@ toppings = ["Pepperoni", "Sausage", "Mushrooms", "Onions", "Ham", "Canadian Baco
 
 def addstuff():
 
-    #salad = MenuDish.objects.get(pk=5)
-    #for item in Salad_items:
-        #if Salad_items.index(item) % 2 == 0:
-            #salad_item = MenuItem(name=item, dish=salad)
-            #salad_item.save()
-        #else:
-            #salad_item.large_price = item
-            #salad_item.save()
+    for dish in dishes:
+        dish = MenuDish(name=dish)
+        dish.save()
+
+    regular = MenuDish.objects.get(pk=8)
+    for item in regular_items:
+        if regular_items.index(item) % 3 == 0:
+            regular_item = MenuItem(name=item, dish=regular)
+            regular_item.save()
+        elif regular_items.index(item) % 2 == 0:
+            regular_item.large_price = item
+            regular_item.save()
+        else:
+            regular_item.small_price = item
+            regular_item.save()
 
 
-    #pasta = MenuDish.objects.get(pk=4)
-    #for item in pasta_items:
-        #if pasta_items.index(item) % 2 == 0:
-            #pasta_item = MenuItem(name=item, dish=pasta)
-            #pasta_item.save()
-        #else:
-            #pasta_item.large_price = item
-            #pasta_item.save()
+    sicilian = MenuDish.objects.get(pk=9)
+    for item in sicilian_items:
+        if sicilian_items.index(item) % 3 == 0:
+            sicilian_item = MenuItem(name=item, dish=sicilian)
+            sicilian_item.save()
+        elif sicilian_items.index(item) % 2 == 0:
+            sicilian_item.large_price = item
+            sicilian_item.save()
+        else:
+            sicilian_item.small_price = item
+            sicilian_item.save()
 
 
-    #dinner = MenuDish.objects.get(pk=6)
-    #for item in dinner_items:
-        #if dinner_items.index(item) % 3 == 0:
-            #dinner_item = MenuItem(name=item, dish=dinner)
-            #dinner_item.save()
-        #elif dinner_items.index(item) % 2 == 0:
-            #dinner_item.large_price = item
-            #dinner_item.save()
-        #else:
-            #dinner_item.small_price = item
-            #dinner_item.save()
+    sub = MenuDish.objects.get(pk=10)
+    for item in sub_items:
+        if sub_items.index(item) % 3 == 0:
+            sub_item = MenuItem(name=item, dish=sub)
+            sub_item.save()
+        elif sub_items.index(item) % 2 == 0:
+            sub_item.large_price = item
+            sub_item.save()
+        else:
+            sub_item.small_price = item
+            sub_item.save()
 
 
-    #sub = MenuDish.objects.get(pk=1)
-    #for item in sub_items:
-        #if sub_items.index(item) % 3 == 0:
-            #sub_item = MenuItem(name=item, dish=sub)
-            #sub_item.save()
-        #elif sub_items.index(item) % 2 == 0:
-            #sub_item.large_price = item
-            #sub_item.save()
-        #else:
-            #sub_item.small_price = item
-            #sub_item.save()
+    pasta = MenuDish.objects.get(pk=11)
+    for item in pasta_items:
+        if pasta_items.index(item) % 2 == 0:
+            pasta_item = MenuItem(name=item, dish=pasta)
+            pasta_item.save()
+        else:
+            pasta_item.large_price = item
+            pasta_item.save()
 
 
-    #sicilian = MenuDish.objects.get(pk=2)
-    #for item in sicilian_items:
-        #if sicilian_items.index(item) % 3 == 0:
-            #sicilian_item = MenuItem(name=item, dish=sicilian)
-            #sicilian_item.save()
-        #elif sicilian_items.index(item) % 2 == 0:
-            #sicilian_item.large_price = item
-            #sicilian_item.save()
-        #else:
-            #sicilian_item.small_price = item
-            #sicilian_item.save()
+    salad = MenuDish.objects.get(pk=12)
+    for item in Salad_items:
+        if Salad_items.index(item) % 2 == 0:
+            salad_item = MenuItem(name=item, dish=salad)
+            salad_item.save()
+        else:
+            salad_item.large_price = item
+            salad_item.save()
 
 
-    #regular = MenuDish.objects.get(pk=3)
-    #for item in regular_items:
-        #if regular_items.index(item) % 3 == 0:
-            #regular_item = MenuItem(name=item, dish=regular)
-            #regular_item.save()
-        #elif regular_items.index(item) % 2 == 0:
-            #regular_item.large_price = item
-            #regular_item.save()
-        #else:
-            #regular_item.small_price = item
-            #regular_item.save()
-    #salad = MenuDish.objects.get(pk=5)
+    dinner = MenuDish.objects.get(pk=13)
+    for item in dinner_items:
+        if dinner_items.index(item) % 3 == 0:
+            dinner_item = MenuItem(name=item, dish=dinner)
+            dinner_item.save()
+        elif dinner_items.index(item) % 2 == 0:
+            dinner_item.large_price = item
+            dinner_item.save()
+        else:
+            dinner_item.small_price = item
+            dinner_item.save()
+
 
     for item in toppings:
         topping = MenuExtra(name=item)

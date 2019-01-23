@@ -123,4 +123,4 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 # Login url for @login_required decorator function
-LOGIN_URL = '/login'
+LOGIN_URL = 'login'
