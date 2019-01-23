@@ -11,7 +11,11 @@ def auth_login(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect("/")
+
+            if user.is_staff:
+                return redirect("kitchen_menu")
+
+            return redirect("menu")
         else:
             return redirect("login", {"message": "Invalid login details"})
     if request.method == "GET":
@@ -29,7 +33,7 @@ def auth_register(request):
 
         login(request, user)
 
-        return redirect("index")
+        return redirect("menu")
 
     if request.method == "GET":
         return render(request, "accounts/register.html", {"messgage": None})

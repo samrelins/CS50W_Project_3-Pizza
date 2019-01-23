@@ -1,0 +1,42 @@
+{% extends "kitchen/base.html" %}
+
+{% block title %}
+    Open Orders
+{% endblock %}
+
+{% block body %}
+
+    <div class="row px-4">
+        <div class="col">
+            <h1 class="border-bottom display-block text-center px-auto py-3">Open Orders:</h1>
+        </div>
+    </div>
+    <div class="row p-4">
+
+        {% if not orders %}
+        <div class="col">
+            <h2 class="text-center">No outstanding orders</h2>
+        </div>
+        {% endif %}
+
+        {% for order in orders %}
+            <div class="col-sm-6 col-md-4 col-lg-3 p-0">
+                <div class="card m-3">
+                    <div class="card-header">
+                        <h3>Order #{{ order.id }}</h3>
+                        <h5 class="text-muted">{{ order.print_date }}</h5>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">Items {{ order.items_total }}</li>
+                        <li class="list-group-item">Total: <span class="text-danger">{{ order.print_total }}</span></li>
+                        <li class="list-group-item font-weight-bold">{{ order.user }}</li>
+                    </ul>
+                    <div class="card-body text-center">
+                        <a class="btn btn-primary" href="{% url "kitchen_order" order_id=order.id %}">View Details</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+
+    </div>
+{% endblock %}

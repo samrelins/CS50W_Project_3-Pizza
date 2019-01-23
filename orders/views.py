@@ -140,7 +140,7 @@ def remove_item(request, item_id):
 
 
 @login_required
-def complete_order(request):
+def order_payment(request):
 
     current_order = Order.objects.get(user=request.user, paid="False")
 
@@ -156,5 +156,5 @@ def complete_order(request):
         context = {
                 "order": current_order,
         }
-        return render(request, "orders/complete_order.html", context)
+        return render(request, "orders/order_payment.html", context)
 

@@ -1,7 +1,7 @@
 {% extends "menu/base_navbar.html" %}
 
 {% block title %}
-    Complete Order
+    Order Payment
 {% endblock %}
 
 {% block body %}
@@ -30,10 +30,10 @@
             </div>
         </div>
     </div>
-    <form target="{% url "complete_order" %}" method="POST">
+    <form target="{% url "order_payment" %}" method="POST">
         <div class="row">
                 {% csrf_token %}
-                <button class="btn btn-primary display-block mx-auto" type="submit" target="complete_order" method="POST">Complete Order</button>
+                <button class="btn btn-primary display-block mx-auto" type="submit" method="POST">Complete Payment</button>
         </div>
     </form>
 {% endblock %}

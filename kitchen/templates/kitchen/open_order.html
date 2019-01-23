@@ -1,16 +1,12 @@
-{% extends "menu/base_navbar.html" %}
+{% extends "kitchen/base.html" %}
 
 {% block title %}
-    Your Order
+    Order #{{ order.id }}
 {% endblock %}
 
 {% block body %}
     <div class="row">
-    {% if order.items_total %}
-    <a class="btn btn-primary display-block mx-auto mt-4" href="{% url "choose_item" %}">Add another item yall</a>
-    {% else %}
-    <a class="btn btn-primary display-block mx-auto mt-4" href="{% url "choose_item" %}">Start yo order innit</a>
-    {% endif %}
+        <a class="btn btn-primary display-block mx-auto mt-4" href="{% url "open_orders" %}">Back to Open Orders</a>
     </div>
 
     <div class="row px-5 mt-4">
@@ -50,10 +46,6 @@
                     {% endif %}
 
                     <li class="list-group-item">Price: <span class="text-danger">{{ item.print_price }}</span></li>
-                    <li class="list-group-item text-center text-white">
-                        <a class="btn btn-danger mr-2" href="{% url "edit_item" item_id=item.id %}">Edit</a>
-                        <a class="btn btn-danger" href="{% url "remove_item" item_id=item.id %}">Remove</a>
-                    </li>
                 </ul>
             </div>
         </div>
@@ -87,13 +79,12 @@
         </div>
     </div>
 
-    {% if order.items_total %}
-    <div class="row">
-        <a class="btn btn-primary display-block mx-auto" href="{% url "order_payment" %}">Pay for dat shit</a>
-    </div>
-    {% endif %}
-
-
+    <form action="{% url "complete_order" order_id=order.id %}" method="POST">
+        <div class="row">
+                {% csrf_token %}
+                <button class="btn btn-danger display-block mx-auto" type="submit">Completed</button>
+        </div>
+    </form>
 
 {% endblock %}
 
