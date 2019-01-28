@@ -158,11 +158,9 @@ def order_payment(request):
         return redirect("orders")
     else:
         if current_order.items_total() == 0:
-            print("redirecting empty order")
             return redirect("order", order_id=current_order.id)
 
     if request.method == "POST":
-        print("setting paid to true")
         current_order.paid = True
         current_order.save()
         return redirect("orders")

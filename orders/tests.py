@@ -65,13 +65,11 @@ class OrdersTestCase(TestCase):
         order = Order.objects.get(user=user)
         c = Client()
         c.force_login(user)
-        print("checking pay route without items in order")
         response = c.post(f"/orders/pay", follow=True)
         self.assertEqual(response.redirect_chain, [('/orders/1', 302)])
 
         item = OrderItem.objects.get(id=1)
         order.items.add(item)
-        print("checking pay route with items in order")
         response = c.post(f"/orders/pay", follow=True)
         order = Order.objects.get(user=user)
         self.assertTrue(order.paid)
