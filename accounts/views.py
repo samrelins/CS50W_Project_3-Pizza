@@ -2,7 +2,6 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 
-# Create your views here.
 
 def auth_login(request):
     if request.method == "POST":
