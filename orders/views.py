@@ -57,6 +57,11 @@ def order(request, order_id):
 @login_required
 def choose_item(request):
 
+    unpaid_order = Order.objects.filter(user=request.user, paid="False").first()
+
+    if not unpaid_order:
+        return redirect("orders")
+
     items = MenuItem.objects.all()
     dishes = MenuDish.objects.all()
     context = {
@@ -68,6 +73,11 @@ def choose_item(request):
 
 @login_required
 def item_options(request, item_id):
+
+    unpaid_order = Order.objects.filter(user=request.user, paid="False").first()
+
+    if not unpaid_order:
+        return redirect("orders")
 
     try:
         item = MenuItem.objects.get(pk=item_id)
@@ -144,15 +154,19 @@ def order_payment(request):
 
     current_order = Order.objects.get(user=request.user, paid="False")
 
+    if not current_order:
+        return redirect("orders")
+    else:
+        if current_order.items_total() == 0:
+            print("redirecting empty order")
+            return redirect("order", order_id=current_order.id)
+
     if request.method == "POST":
+        print("setting paid to true")
         current_order.paid = True
         current_order.save()
         return redirect("orders")
-
     else:
-        if current_order.items_total() == 0:
-            return redirect("order", order_id=current_order.id)
-
         context = {
                 "order": current_order,
         }
