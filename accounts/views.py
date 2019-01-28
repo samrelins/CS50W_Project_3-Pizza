@@ -40,7 +40,11 @@ def auth_register(request):
 
 
 def auth_logout(request):
+    is_staff = request.user.is_staff
     logout(request)
-    return redirect("menu")
+    if is_staff:
+        return redirect("login")
+    else:
+        return redirect("menu")
 
 
