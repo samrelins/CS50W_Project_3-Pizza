@@ -5,19 +5,55 @@ from menu.models import *
 
 dishes = ["Regular Pizza", "Sicilian Pizza", "Subs", "Pasta", "Salads", "Dinner Platters"]
 
-regular_items = ["Cheese", 1220, 1745, "1 topping", 1320, 1945, "2 toppings", 1470, 2145, "3 toppings", 1570,	2345, "Special", 1725, 2545]
+regular_items = ["Cheese", 1220, 1745, 
+                    "1 topping", 1320, 1945, 
+                    "2 toppings", 1470, 2145, 
+                    "3 toppings", 1570,	2345, 
+                    "Special", 1725, 2545]
 
-sicilian_items = ["Cheese", 2345, 3770, "1 item", 2545, 3970, "2 items", 2745, 4170, "3 items", 2845, 4370, "Special", 2945, 4470]
+sicilian_items = ["Cheese", 2345, 3770, 
+                    "1 item", 2545, 3970, 
+                    "2 items", 2745, 4170, 
+                    "3 items", 2845, 4370, 
+                    "Special", 2945, 4470]
 
-sub_items = ["Cheese", 650, 795, "Italian", 650, 795, "Ham + Cheese", 650, 795, "Meatball", 650, 795, "Tuna", 650, 795, "Turkey", 750, 850, "Chicken Parmigiana", 750, 850, "Eggplant Parmigiana", 650, 795, "Steak", 650, 795, "Steak + Cheese", 695, 850, "Hamburger", 460, 695, "Cheeseburger", 510, 745, "Fried Chicken", 695, 850, "Veggie", 695, 850]
+sub_items = ["Cheese", 650, 795, 
+                "Italian", 650, 795, 
+                "Ham + Cheese", 650, 795, 
+                "Meatball", 650, 795, 
+                "Tuna", 650, 795, 
+                "Turkey", 750, 850, 
+                "Chicken Parmigiana", 750, 850, 
+                "Eggplant Parmigiana", 650, 795, 
+                "Steak", 650, 795, 
+                "Steak + Cheese", 695, 850, 
+                "Hamburger", 460, 695, 
+                "Cheeseburger", 510, 745, 
+                "Fried Chicken", 695, 850, 
+                "Veggie", 695, 850]
 
-pasta_items = ["Baked Ziti w/Mozzarella", 650, "Baked Ziti w/Meatballs", 875, "Baked Ziti w/Chicken", 975]
+pasta_items = ["Baked Ziti w/Mozzarella", 650, 
+                "Baked Ziti w/Meatballs", 875, 
+                "Baked Ziti w/Chicken", 975]
 
-Salad_items = ["Garden Salad", 625, "Greek Salad", 825, "Antipasto", 825, "Salad w/Tuna", 825]
+Salad_items = ["Garden Salad", 625, 
+                "Greek Salad", 825, 
+                "Antipasto", 825, 
+                "Salad w/Tuna", 825]
 
-dinner_items = ["Garden Salad", 3500, 6000, "Greek Salad", 4500, 7000, "Antipasto", 4500, 7000, "Baked Ziti", 3500, 6000, "Meatball Parm", 4500, 7000, "Chicken Parm", 4500, 8000]
+dinner_items = ["Garden Salad", 3500, 6000, 
+                "Greek Salad", 4500, 7000, 
+                "Antipasto", 4500, 7000, 
+                "Baked Ziti", 3500, 6000, 
+                "Meatball Parm", 4500, 7000, 
+                "Chicken Parm", 4500, 8000]
 
-toppings = ["Pepperoni", "Sausage", "Mushrooms", "Onions", "Ham", "Canadian Bacon", "Pineapple", "Eggplant", "Tomato & Basil", "Green Peppers", "Hamburger", "Spinach", "Artichoke", "Buffalo Chicken", "Barbecue Chicken", "Anchovies", "Black Olives", "Fresh Garlic", "Zucchini"]
+toppings = ["Pepperoni", "Sausage", "Mushrooms", 
+            "Onions", "Ham", "Canadian Bacon", 
+            "Pineapple", "Eggplant", "Tomato & Basil", 
+            "Green Peppers", "Hamburger", "Spinach", 
+            "Artichoke", "Buffalo Chicken", "Barbecue Chicken", 
+            "Anchovies", "Black Olives", "Fresh Garlic", "Zucchini"]
 
 def load_menu():
     for dish in dishes:
