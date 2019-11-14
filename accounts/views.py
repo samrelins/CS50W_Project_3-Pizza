@@ -16,7 +16,7 @@ def auth_login(request):
 
             return redirect("menu")
         else:
-            return redirect("login", {"message": "Invalid login details"})
+            return render(request, "accounts/login.html", {"message": "Invalid login details"})
     if request.method == "GET":
         return render(request, "accounts/login.html", {"messgage": None})
 

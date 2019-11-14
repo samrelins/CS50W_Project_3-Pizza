@@ -13,7 +13,6 @@
                 <table class="table">
                     <thead>
                         <h1 colspan="3" scope="col" class="text-center">{{ dish }}</h1>
-
                         {% if not dish.one_size %}
                         <tr class="d-flex">
                             <th class="col-6" scope="col"></th>
@@ -52,16 +51,17 @@
                 </table>
                 <div class="collapse" id="collapseExtras{{ item.id }}">
                     <table class="table">
-                        <tbody>
+                        <thead>
                             <tr class="d-flex"> 
-                                <td class="col-9 font-weight-bold text-danger">
+                                <td class="col-6 font-weight-bold text-danger">
                                     {% for item in item.extras.all %}
                                         {{ item.name }} - 
                                     {% endfor %}
                                 </td>
-                                <td class="col-3">{{ item.dish.print_extra_price }}</td>
+                                <td class="col-3 text-danger">{{ item.dish.print_extra_price }}</td>
+                                <td class="col-3 text-danger">{{ item.dish.print_extra_price }}</td>
                             </tr>
-                        </tbody>
+                        </thead>
                     </table>
                 </div>
                     <table class="table">
@@ -75,7 +75,11 @@
 
                 {% if dish.extras.all %}
                     <button class="btn btn-primary mx-auto d-flex mb-3" type="button" data-toggle="collapse" data-target="#collapseExtras{{ dish.id }}" aria-expanded="false" aria-controls="collapseExtras{{ dish.id }}">
-                        Show Extras
+                        {% if dish.extra_price == 0 %}
+                            Show Toppings
+                        {% else %}
+                            Show Extras
+                        {% endif %}
                     </button>
                     <div class="collapse" id="collapseExtras{{ dish.id }}">
                         <table class="table">
@@ -85,6 +89,9 @@
                                         {% for extra in dish.extras.all %}
                                             {{ extra.name }} - 
                                         {% endfor %}
+                                        {% if dish.extra_price != 0 %}
+                                            (additional {{ dish.print_extra_price }})
+                                        {% endif %}
                                     </td>
                                 </tr>
                                 <tr></tr>

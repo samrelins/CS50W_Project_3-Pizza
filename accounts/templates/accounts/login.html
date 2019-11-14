@@ -10,12 +10,16 @@
 {% endblock %}
 
 {% block body %}
-    <form class="form-signin" method="POST"> 
+    <form class="form-signin bg-dark" method="POST"> 
         {% csrf_token %}
         <div id="title">
             <h1 class="display-2">Login</h1>
             <h3>Get some food in yo face bitch</h3>
         </div>
+
+        {% if message %}
+            <h3 class="text-center text-danger">{{ message }}</h3>
+        {% endif %}
 
         <div class="form-label-group" id="top_box">
             <input type="text" id="inputUsername" class="form-control" placeholder="Username" required autofocus name="username">
