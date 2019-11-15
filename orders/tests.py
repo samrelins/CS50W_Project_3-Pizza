@@ -18,7 +18,7 @@ class OrdersTestCase(TestCase):
         user = User.objects.get(username='test_user')
         c = Client()
         c.force_login(user)
-        response = c.get("/orders/")
+        response = c.get("/display_orders/")
         self.assertEqual(response.status_code, 200)
 
 
@@ -27,7 +27,7 @@ class OrdersTestCase(TestCase):
         order = Order.objects.get(user=user)
         c = Client()
         c.force_login(user)
-        response = c.get(f"/orders/{order.id}")
+        response = c.get(f"/display_orders/{order.id}")
         self.assertEqual(response.status_code, 200)
 
 
@@ -37,13 +37,13 @@ class OrdersTestCase(TestCase):
         c = Client()
         c.force_login(user)
 
-        response = c.get(f"/orders/new", follow=True)
-        self.assertEqual(response.redirect_chain, [('/orders/1', 302)])
+        response = c.get(f"/display_orders/new", follow=True)
+        self.assertEqual(response.redirect_chain, [('/display_orders/1', 302)])
 
         order.paid = True;
         order.save()
-        response = c.get(f"/orders/new", follow=True)
-        self.assertEqual(response.redirect_chain, [('/orders/2', 302)])
+        response = c.get(f"/display_orders/new", follow=True)
+        self.assertEqual(response.redirect_chain, [('/display_orders/2', 302)])
 
 
     def test_choose_item(self):
@@ -51,13 +51,13 @@ class OrdersTestCase(TestCase):
         order = Order.objects.get(user=user)
         c = Client()
         c.force_login(user)
-        response = c.get(f"/orders/choose_item")
+        response = c.get(f"/display_orders/choose_item")
         self.assertEqual(response.status_code, 200)
 
         order.paid = True;
         order.save()
-        response = c.get(f"/orders/choose_item", follow=True)
-        self.assertEqual(response.redirect_chain, [('/orders/', 302)])
+        response = c.get(f"/display_orders/choose_item", follow=True)
+        self.assertEqual(response.redirect_chain, [('/display_orders/', 302)])
 
 
     def test_order_payment(self):
@@ -65,13 +65,13 @@ class OrdersTestCase(TestCase):
         order = Order.objects.get(user=user)
         c = Client()
         c.force_login(user)
-        response = c.post(f"/orders/pay", follow=True)
-        self.assertEqual(response.redirect_chain, [('/orders/1', 302)])
+        response = c.post(f"/display_orders/pay", follow=True)
+        self.assertEqual(response.redirect_chain, [('/display_orders/1', 302)])
 
         item = OrderItem.objects.get(id=1)
         order.items.add(item)
-        response = c.post(f"/orders/pay", follow=True)
+        response = c.post(f"/display_orders/pay", follow=True)
         order = Order.objects.get(user=user)
         self.assertTrue(order.paid)
-        self.assertEqual(response.redirect_chain, [('/orders/', 302)])
+        self.assertEqual(response.redirect_chain, [('/display_orders/', 302)])
 
