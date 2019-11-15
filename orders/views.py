@@ -6,7 +6,7 @@ from .models import *
 # Create your views here.
 
 @login_required
-def orders(request):
+def display_orders(request):
 
     orders = Order.objects.filter(user=request.user).all()
 
