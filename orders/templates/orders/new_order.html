@@ -7,9 +7,9 @@
 {% block body %}
     <div class="row">
     {% if order.items_total %}
-    <a class="btn btn-primary display-block mx-auto mt-4" href="{% url "choose_item" %}">Add another item yall</a>
+    <a class="btn btn-primary display-block mx-auto mt-4" href="{% url "choose_item" %}">Add Another Item</a>
     {% else %}
-    <a class="btn btn-primary display-block mx-auto mt-4" href="{% url "choose_item" %}">Start yo order innit</a>
+    <a class="btn btn-primary display-block mx-auto mt-4" href="{% url "choose_item" %}">Choose an Item</a>
     {% endif %}
     </div>
 
@@ -24,10 +24,10 @@
         <div class="col-sm-6 col-md-4 col-lg-3 p-0">
         {% endif %}
         
-            <div class="card m-3">
+            <div class="card m-3 bg-dark">
                 <div class="card-header pt-4">
-                    <h5 class="font-weight-bold">{{ item.item.dish.name }}:</h5>
-                    <h5 class="font-weight-bold">{{ item.item.name }}</h5>
+                    <h5 class="font-weight-bold text-light">{{ item.item.dish.name }}:</h5>
+                    <h5 class="font-weight-bold text-light">{{ item.item.name }}</h5>
                 </div>
                 <ul class="list-group list-group-flush">
                     
@@ -65,8 +65,8 @@
         <div class="col-sm-1 col-md-2 col-lg-3"></div>
         <div class="col-sm-10 col-md-8 col-lg-6">
             <div class="container-fluid">
-                <table class="table border">
-                    <thead class="table-active">
+                <table class="table border border-dark">
+                    <thead class="table-active thead-dark">
                         <tr>
                             <th class="text-center">Order #{{ order.id }}</th>
                         </tr>
@@ -89,7 +89,7 @@
 
     {% if order.items_total %}
     <div class="row">
-        <a class="btn btn-primary display-block mx-auto" href="{% url "order_payment" %}">Pay for dat shit</a>
+        <a class="btn btn-primary display-block mx-auto" href="{% url "order_payment" %}">Complete Your Order</a>
     </div>
     {% endif %}
 

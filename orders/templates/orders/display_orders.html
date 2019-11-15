@@ -15,8 +15,8 @@
     <div class="row mt-2">
         <div class="col-sm-4"></div>
         <div class="col-sm-4">
-            <div class="card my-2">
-                <div class="card-header">
+            <div class="card my-2 bg-dark">
+                <div class="card-header text-light">
                     <h3>Order #{{ pending_order.id }}</h3>
                     <h5 class="text-muted">{{ pending_order.print_date }}</h5>
                 </div>
@@ -24,7 +24,7 @@
                     <li class="list-group-item">Items {{ pending_order.items_total }}</li>
                     <li class="list-group-item">Total: <span class="text-danger">{{ pending_order.print_total }}</span></li>
                 </ul>
-                <div class="card-body text-center">
+                <div class="card-body text-center bg-white">
                     <a class="btn btn-primary" href="{% url "order" order_id=pending_order.id %}">Complete Order</a>
                 </div>
             </div>
@@ -46,8 +46,8 @@
 
         {% for order in historic_orders %}
             <div class="col-sm-6 col-md-4 col-lg-3 p-0">
-                <div class="card m-3">
-                    <div class="card-header">
+                <div class="card m-3 bg-dark">
+                    <div class="card-header text-light">
                         <h3>Order #{{ order.id }}</h3>
                         <h5 class="text-muted">{{ order.print_date }}</h5>
                     </div>
@@ -62,7 +62,7 @@
                         {% endif %}
                         
                     </ul>
-                    <div class="card-body text-center">
+                    <div class="card-body text-center bg-white">
                         <a class="btn btn-primary" href="{% url "order" order_id=order.id %}">View Details</a>
                     </div>
                 </div>
