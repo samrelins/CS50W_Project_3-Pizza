@@ -16,7 +16,7 @@ def display_orders(request):
             "historic_orders": historic_orders,
             "pending_order": pending_order
     }
-    return render(request, "orders/orders.html", context)
+    return render(request, "orders/display_orders.html", context)
 
 
 @login_required
@@ -42,7 +42,7 @@ def order(request, order_id):
         raise Http404("Order doesn't exist")
 
     if not order.user == request.user:
-        return redirect("orders")
+        return redirect("display_orders")
 
     context = {
             "order": order,
@@ -60,7 +60,7 @@ def choose_item(request):
     unpaid_order = Order.objects.filter(user=request.user, paid="False").first()
 
     if not unpaid_order:
-        return redirect("orders")
+        return redirect("display_orders")
 
     items = MenuItem.objects.all()
     dishes = MenuDish.objects.all()
@@ -155,7 +155,7 @@ def order_payment(request):
     current_order = Order.objects.get(user=request.user, paid="False")
 
     if not current_order:
-        return redirect("orders")
+        return redirect("display_orders")
     else:
         if current_order.items_total() == 0:
             return redirect("order", order_id=current_order.id)
@@ -163,7 +163,7 @@ def order_payment(request):
     if request.method == "POST":
         current_order.paid = True
         current_order.save()
-        return redirect("orders")
+        return redirect("display_orders")
     else:
         context = {
                 "order": current_order,
