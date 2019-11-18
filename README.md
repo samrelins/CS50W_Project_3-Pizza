@@ -40,7 +40,7 @@ pizza/
 	settings.py
 	urls.py
 	wsgi.py
-
+	
 </pre></code>
 
 <p>
@@ -73,92 +73,45 @@ The other files contain information that tells Django how you want your site to 
 </ul>
 <h2>Apps </h2>
 
- to create staff accounts without poking around behind the scenes).
-</p>
-<p>
-Load_db.py in turn calls two different functions - load_menu and load_su. These functions are found in the menu and accounts packages respectively, as they involve loading models contained within these applications
-</p>
-<h2>Dockerfile</h2>
-
-
-<p>
-Included in the root directory is a file storing the settings / instructions for a platform called Docker. To paraphrase significantly, docker creates containers inside which you can run processes. A container is a tiny instance of a computer / server, in which only the requirements for your project are installed and uploaded. In the case of pizza, the Dockerfile instructions tell Docker to add:
-</p>
-<ul>
-
-<li>A python 3 environment
-
-<li>The packages specified in requirements.txt (e.g. Django)
-
-<li>The files from the pizza root directory
-</li>
-</ul>
-<p>
-Once these are loaded into the container, the instructions also tell Docker to call the Django functions to create the site database migrations, and to call the load_db function above to load all the menu/su information into the database. Using these instructions, anybody with Docker installed is able to instantly create and run a pizza server, without having to worry about the requirements of their specific system.
-</p>
-<h2>Testing / travis.yml</h2>
-
-
-<p>
-Each app package also contains a tests.py file that includes a number of test scripts intended to verify that the site is working as it’s supposed to. Test functions mimic various use cases of the site, and check to ensure that the responses match those expected. Such scripts are particularly useful during development, as developers can quickly verify that changes to the site haven’t broken any other site features downstream. 
-</p>
-<p>
-An extension to this idea of automated testing is the concept of Continuous Integration (CI) - the practice of streamlining updates to a project. The root directory includes a .travis.yml file that ‘speaks’ to a continuous integration service called Travis CI. In the case of Pizza, Travis.ci automatically runs the test scripts for each app every time a commit is pushed to Github. Travis then automatically notifies authors of the status of their commits - i.e. if the changes have caused any of the tests to fail or not. 
-</p>
-<p>
 Applications are the functional elements of your site - they can be distinguished as pieces of reusable functionality, such as a login/logout account management facility or a generic blog collection. When you begin adding features to your project, you do so by telling django to create a new app, which creates a new directory as follows:
-</p>
-<p>
+
+<pre><code>
 new_app/
-</p>
-<p>
 	__init__.py
-</p>
-<p>
 	admin.py
-</p>
-<p>
 	apps.py
-</p>
-<p>
 	migrations/
-</p>
-<p>
 		__init__.py
-</p>
-<p>
 	models.py
-</p>
-<p>
 	tests.py
-</p>
-<p>
 	views.py
-</p>
+	
+</code></pre>
+
 <p>
 These files are:
 </p>
 <ul>
 
-<li>__init__.py as before, this tells python that your app is to be considered a package
+<li><b><code>__init__.py</code></b> as before, this tells python that your app is to be considered a package
 
-<li>admin.py allows you to choose the elements of your database model that you would like to be added to django’s admin interface - more on this later
+<li><b><code>admin.py</code></b> allows you to choose the elements of your database model that you would like to be added to django’s admin interface - more on this later
 
-<li>apps.py contains a configuration class for your app - this is to be added to settings.py in your project directory to tell django to include this app in your project and use the project’s settings in this app
+<li><b><code>apps.py</code></b> contains a configuration class for your app - this is to be added to settings.py in your project directory to tell django to include this app in your project and use the project’s settings in this app
 
-<li>migrations/ is part of django’s database management/ORM functionality and is handled by Django
+<li><b><code>migrations/</code></b> is part of django’s database management/ORM functionality and is handled by Django
 
-<li>models.py details all of the database models Django will use for ORM relating to your app. Models are represented by Python classes with class variables and methods and are used to store/manipulate/interact with the information in your database
+<li><b><code>models.py</code></b> details all of the database models Django will use for ORM relating to your app. Models are represented by Python classes with class variables and methods and are used to store/manipulate/interact with the information in your database
 
-<li>tests.py allows you to create automated test scripts that can be used to check your app is functioning properly after making changes in development- more on this later
+<li><b><code>tests.py</code></b> allows you to create automated test scripts that can be used to check your app is functioning properly after making changes in development- more on this later
 
-<li>urls.py as before, declares the url’s specific to your app. This can be thought of as the contents for each section of your site (not created by default for some reason, but required if your app accepts web requests)
+<li><b><code>urls.py</code></b> as before, declares the url’s specific to your app. This can be thought of as the contents for each section of your site (not created by default for some reason, but required if your app accepts web requests)
 
-<li>views.py contains the ‘views’ (unsurprisingly) for your app. Views are the functional elements of your app and tell your server what to do when it gets different web requests and how to respond to different events
+<li><b><code>views.py</code></b> contains the ‘views’ (unsurprisingly) for your app. Views are the functional elements of your app and tell your server what to do when it gets different web requests and how to respond to different events
 </li>
 </ul>
 <p>
-For applications that display their own web pages, static/ and templates/ folders are also present, that contain all the static script (CSS/JS etc.) and HTML templates required to display said pages. 
+Any apps that display their own web pages will also contain <code>static/</code> and <code>templates/</code> directories which house all the static script (CSS/JS etc.) and HTML templates required to display said pages. 
 </p>
 <p>
 Following is a brief description of each of the apps that forms the pizza project and any particularly notable features:
