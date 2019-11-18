@@ -32,42 +32,43 @@ Django projects follow a strict convention that facilitates the use of the djang
 <p>
 All Django apps begin with a file called manage.py and your “project” folder named after your project (so in this case “pizza”), like so:
 </p>
-<code>
-	
-	manage.py
-	pizza/
-		__init__.py
-		settings.py
-		urls.py
-		wsgi.py
-		
-</code>
+
+<pre><code>
+manage.py
+pizza/
+	__init__.py
+	settings.py
+	urls.py
+	wsgi.py
+
+</pre></code>
+
 <p>
 <code>manage.py</code> contains the wherewithal to interact with your project via the command line - it’s the workhorse that allows you to run your development server, set up your database and database schema, run a python shell within your project environment and loads more. For example, typing:
 </p>
 <p>
-<code>
 	
-	>>> Python manage.py runserver
-	
-</code>
+<pre><code>
+>>> Python manage.py runserver
+</code></pre>
+
 </p>
 <p>
-As you might expect, instructs Django to start a development server.
+as you might expect, instructs Django to start a development server.
 </p>
 <p>
-	The files in the <code>pizza/</code> directory form the python “package” for your project; this is specified by the <code>__init__.py</code> file at the top of the folder - this tells python that the folder is to be considered a python package, and allows other scripts to refer to the files in the package using “dotted module names”, for example <code>pizza.urls</code> refers to the contents of the urls.py file. 
+The files in the <code>pizza/</code> directory form the python “package” for your project; this is specified by <code>__init__.py</code> - this tells python that the directory is to be considered a python package, and allows other scripts to refer to the files in the package using “dotted module names”, for example <code>pizza.urls</code> refers to the contents of the <code>urls.py</code> file. 
 </p>
 <p>
 The other files contain information that tells Django how you want your site to work:
 </p>
 <ul>
 
-<li>settings.py (unsurprisingly) sets the global settings for your Django project. 
+<li><b><code>settings.py</code></b> (unsurprisingly) sets the global settings for your Django project. 
 
-<li>urls.py declares all the different URLs from which clients can request information from your site - this can be thought of like the section headings for the contents page of your site. 
+<li><b><code>urls.py</code></b> declares all the different URLs from which clients can request information from your site - this can be thought of like the section headings for the contents page of your site. 
 
-<li>wsgi.py is an entry point for WSGI-compatible servers, not relevant for this project. 
+<li><b><code>wsgi.py</code></b> is an entry point for WSGI-compatible servers, not relevant for this project. 
 </li>
 </ul>
 <h2>Apps </h2>
